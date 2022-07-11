@@ -1,0 +1,34 @@
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+  min-height: 100vh;
+
+  .disconnect {
+    color: red;
+    text-decoration: none;
+  }
+
+  .connect-btn {
+    background: #109fdc;
+    color: #FFFFFF;
+    border-radius: 38.5px;
+    font-size: 16px;
+    border: transparent;
+    cursor: pointer;
+    padding: 10px 20px;
+  }
+
+  .switch {
+    background: #dc9510;
+    color: #FFFFFF;
+    border-radius: 15px;
+    font-size: 14px;
+    border: transparent;
+    cursor: pointer;
+    padding: 5px 20px;
+  }
+}
+

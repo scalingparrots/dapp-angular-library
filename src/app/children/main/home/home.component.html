@@ -1,0 +1,20 @@
+<div class="home-container">
+  <div *ngIf="!getGlobalVariables().isWalletConnected">
+    <button class="connect-btn" (click)="openConnect()">Connect wallet</button>
+  </div>
+
+
+  <div *ngIf="getGlobalVariables().isWalletConnected">
+    <h2>
+      <i class="fas fa-wallet text-dark"></i> Wallet Connected: {{getGlobalVariables().wallet.addressShort}}
+    </h2>
+
+    <a href="" class="disconnect" (click)="disconnectWallet()">
+      Disconnect
+    </a>
+  </div>
+
+  <div *ngIf="getGlobalVariables().isWalletConnected">
+    <button class="switch" (click)="openSwitchNetwork()">Switch network</button>
+  </div>
+</div>

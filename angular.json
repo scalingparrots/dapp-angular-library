@@ -20,6 +20,16 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "lodash",
+              "@walletconnect/web3-provider",
+              "@walletconnect/window-metadata",
+              "@walletconnect/socket-transport",
+              "@walletconnect/environment",
+              "@metamask/detect-provider",
+              "hash.js",
+              "query-string"
+            ],
             "outputPath": "dist/dapp-library-playground",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -31,6 +41,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -40,8 +51,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "3mb",
+                  "maximumError": "3mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -99,9 +110,41 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
             ],
             "scripts": []
+          }
+        }
+      }
+    },
+    "dapp-library": {
+      "projectType": "library",
+      "root": "projects/dapp-library",
+      "sourceRoot": "projects/dapp-library/src",
+      "prefix": "dapp-lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/dapp-library/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/dapp-library/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/dapp-library/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/dapp-library/src/test.ts",
+            "tsConfig": "projects/dapp-library/tsconfig.spec.json",
+            "karmaConfig": "projects/dapp-library/karma.conf.js"
           }
         }
       }
