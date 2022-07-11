@@ -1,5 +1,5 @@
 {
-  "name": "dapp-test",
+  "name": "dapp-library",
   "version": "0.0.1",
   "peerDependencies": {
     "@angular/common": "^13.2.0",
