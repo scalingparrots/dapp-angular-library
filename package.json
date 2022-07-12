@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lib:build": "ng build dapp-angular-lib",
-    "lib:publish": "npm publish dist/dapp-angular-lib/"
+    "lib:publish": "npm publish --access public dist/dapp-angular-lib/"
   },
   "private": true,
   "dependencies": {

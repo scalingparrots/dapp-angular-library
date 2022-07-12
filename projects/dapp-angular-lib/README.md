@@ -31,7 +31,7 @@ You can view a live demo [here]().
 ## npm
 
 ```bash
-$ npm install dapp-angular-lib
+$ npm install @scalingparrots/dapp-angular-lib
 ```
 
 ## Warnings running on angular 10 +
