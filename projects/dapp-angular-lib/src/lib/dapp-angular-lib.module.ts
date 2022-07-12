@@ -10,4 +10,4 @@ import {CommonModule} from "@angular/common";
   exports: [],
   providers: [GlobalVariables]
 })
-export class DappLibraryModule { }
+export class DappAngularLibModule { }

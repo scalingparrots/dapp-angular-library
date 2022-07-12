@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {MatDialogRef} from "@angular/material/dialog";
-import {WalletService} from "../../../../../../projects/dapp-library/src/lib/services/wallet.service";
-import {GlobalVariables} from "../../../../../../projects/dapp-library/src/lib/helpers/global-variables";
+import {WalletService} from "../../../../../../projects/dapp-angular-lib/src/lib/services/wallet.service";
+import {GlobalVariables} from "../../../../../../projects/dapp-angular-lib/src/lib/helpers/global-variables";
+import {ChainId, NETWORK_INFO} from "../../../../../../projects/dapp-angular-lib/src/lib/helpers/chain";
 
 @Component({
   selector: 'app-connect-wallet',
@@ -10,14 +11,13 @@ import {GlobalVariables} from "../../../../../../projects/dapp-library/src/lib/h
 })
 export class ConnectWalletComponent implements OnInit {
   win: any;
+  primary_network = NETWORK_INFO[ChainId.BSC];
 
   constructor(
     private _walletService: WalletService,
     private _dialogRef: MatDialogRef<ConnectWalletComponent>
   ) {
     this.win = (window as any);
-
-    _walletService.initMetaMaskExt();
   }
 
   ngOnInit(): void {

@@ -14,7 +14,7 @@
     </a>
   </div>
 
-  <div *ngIf="getGlobalVariables().isWalletConnected">
+  <div *ngIf="getGlobalVariables().isWalletConnected && getGlobalVariables().type === 'metamask'">
     <button class="switch" (click)="openSwitchNetwork()">Switch network</button>
   </div>
 </div>

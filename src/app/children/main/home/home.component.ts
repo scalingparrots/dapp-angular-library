@@ -1,17 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 import {BigNumber} from "ethers";
-import {ChainId, NETWORK_INFO} from "../../../../../projects/dapp-library/src/lib/helpers/chain";
-import {WalletService} from "../../../../../projects/dapp-library/src/lib/services/wallet.service";
-import {NetworkService} from "../../../../../projects/dapp-library/src/lib/services/network.service";
-import {ContractService} from "../../../../../projects/dapp-library/src/lib/services/contract.service";
-import {GlobalVariables} from "../../../../../projects/dapp-library/src/lib/helpers/global-variables";
-import {
-  ConnectWalletComponent
-} from "../component/connect-wallet/connect-wallet.component";
-import {
-  SwitchNetworkComponent
-} from "../component/switch-network/switch-network.component";
+import {ChainId, NETWORK_INFO} from "../../../../../projects/dapp-angular-lib/src/lib/helpers/chain";
+import {WalletService} from "../../../../../projects/dapp-angular-lib/src/lib/services/wallet.service";
+import {NetworkService} from "../../../../../projects/dapp-angular-lib/src/lib/services/network.service";
+import {ContractService} from "../../../../../projects/dapp-angular-lib/src/lib/services/contract.service";
+import {GlobalVariables} from "../../../../../projects/dapp-angular-lib/src/lib/helpers/global-variables";
+import {ConnectWalletComponent} from "../component/connect-wallet/connect-wallet.component";
+import {SwitchNetworkComponent} from "../component/switch-network/switch-network.component";
 
 const abi = require('../../../../app/core/abi/coc.abi.json');
 
@@ -22,6 +18,7 @@ const abi = require('../../../../app/core/abi/coc.abi.json');
 })
 export class HomeComponent implements OnInit {
   win: any;
+  primary_network = NETWORK_INFO[ChainId.BSC];
   supported_network = [
     NETWORK_INFO[ChainId.BSC],
     NETWORK_INFO[ChainId.Avalanche],
@@ -37,12 +34,13 @@ export class HomeComponent implements OnInit {
   ) {
     this.win = (window as any);
 
-    if (this.win.ethereum) {
-      // check network
-      this.getProvider()
-        // check network only if needed
-        .then(_ => _networkService.checkNetwork(NETWORK_INFO[ChainId.BSC]));
-    }
+    // init network necessary
+    _walletService.initNetwork(this.primary_network);
+
+    // check account
+    this.getProvider()
+      // check network only if needed
+      .then(_ => _networkService.checkNetwork(this.primary_network));
   }
 
   ngOnInit(): void {
@@ -99,7 +97,7 @@ export class HomeComponent implements OnInit {
     this.dialog.open(ConnectWalletComponent)
       .afterClosed()
       // check network only if needed
-      .subscribe(_ => this._networkService.checkNetwork(NETWORK_INFO[ChainId.BSC]))
+      .subscribe(_ => this._networkService.checkNetwork(this.primary_network))
   }
 
   openSwitchNetwork(): void {

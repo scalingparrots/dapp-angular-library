@@ -4,10 +4,11 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import {AppRoutingModule} from './app-routing.module';
 
-import {DappLibraryModule} from "dapp-library";
-import {GlobalVariables} from "../../projects/dapp-library/src/lib/helpers/global-variables";
+import {DappAngularLibModule} from "../../projects/dapp-angular-lib/src/lib/dapp-angular-lib.module";
+import {GlobalVariables} from "../../projects/dapp-angular-lib/src/lib/helpers/global-variables";
 
 import {AppComponent} from './app.component';
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import {AppComponent} from './app.component';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    DappLibraryModule
+    DappAngularLibModule,
+    MatSnackBarModule
   ],
   providers: [GlobalVariables],
   bootstrap: [AppComponent]

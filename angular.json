@@ -118,23 +118,23 @@
         }
       }
     },
-    "dapp-library": {
+    "dapp-angular-lib": {
       "projectType": "library",
-      "root": "projects/dapp-library",
-      "sourceRoot": "projects/dapp-library/src",
+      "root": "projects/dapp-angular-lib",
+      "sourceRoot": "projects/dapp-angular-lib/src",
       "prefix": "dapp-lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "project": "projects/dapp-library/ng-package.json"
+            "project": "projects/dapp-angular-lib/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/dapp-library/tsconfig.lib.prod.json"
+              "tsConfig": "projects/dapp-angular-lib/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/dapp-library/tsconfig.lib.json"
+              "tsConfig": "projects/dapp-angular-lib/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -142,9 +142,9 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/dapp-library/src/test.ts",
-            "tsConfig": "projects/dapp-library/tsconfig.spec.json",
-            "karmaConfig": "projects/dapp-library/karma.conf.js"
+            "main": "projects/dapp-angular-lib/src/test.ts",
+            "tsConfig": "projects/dapp-angular-lib/tsconfig.spec.json",
+            "karmaConfig": "projects/dapp-angular-lib/karma.conf.js"
           }
         }
       }

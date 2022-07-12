@@ -13,10 +13,18 @@ export class ContractService {
     this.win = (window as any);
   }
 
+  /***
+   * Returns web3 provider
+   * @private
+   */
   private async getWebProvider() {
+    const type = this._globalVariables.getLocalStorage("type");
     let provider: any;
-    if (this.win.ethereum) {
+
+    if (type === "metamask" && this.win.ethereum) {
       provider = this.win.ethereum;
+    } else if (type === "binance" && this.win.BinanceChain) {
+      provider = this.win.BinanceChain;
     } else {
       provider = new WalletConnectProvider({
         infuraId: this._globalVariables.infuraId,
@@ -27,6 +35,12 @@ export class ContractService {
     return new ethers.providers.Web3Provider(provider);
   }
 
+  /***
+   * Returns contract
+   * @param contractAddress Smart contract address
+   * @param abi
+   * @private
+   */
   private async getContract(contractAddress: string, abi: any) {
     const provider = await this.getWebProvider();
     const signer = provider.getSigner();
@@ -38,10 +52,23 @@ export class ContractService {
     );
   }
 
+  /***
+   * Write smart contract call, returns contract
+   * @param contractAddress Smart contract address
+   * @param abi
+   */
   public writeContract(contractAddress: string, abi: any): Promise<ethers.Contract> {
     return this.getContract(contractAddress, abi);
   }
 
+  /***
+   * Read smart contract call, returns value
+   * @param contractAddress Smart contract address
+   * @param rpcProvider
+   * @param abi
+   * @param methodName
+   * @param bySigner
+   */
   public async readContract(contractAddress: string, rpcProvider: string, abi: any, methodName: string, bySigner = false) {
     let provider;
     let signer;

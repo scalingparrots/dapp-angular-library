@@ -1,13 +1,13 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {WalletService} from "../../../../../../projects/dapp-library/src/lib/services/wallet.service";
-import {NetworkService} from "../../../../../../projects/dapp-library/src/lib/services/network.service";
+import {WalletService} from "../../../../../../projects/dapp-angular-lib/src/lib/services/wallet.service";
+import {NetworkService} from "../../../../../../projects/dapp-angular-lib/src/lib/services/network.service";
 import {
   CHAIN_NAMES,
   ChainId,
   ChainIdModel,
   NETWORK_ICON
-} from "../../../../../../projects/dapp-library/src/lib/helpers/chain";
+} from "../../../../../../projects/dapp-angular-lib/src/lib/helpers/chain";
 
 
 @Component({
@@ -36,6 +36,8 @@ export class SwitchNetworkComponent implements OnInit {
   }
 
   switchNetwork(network: any): void {
-    this._networkService.changeNetwork(network);
+    this._networkService.changeNetwork(network).then((_) => {
+      this._dialogRef.close()
+    });
   }
 }
