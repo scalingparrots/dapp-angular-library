@@ -19,6 +19,14 @@
     "type": "git",
     "url": "https://github.com/scalingparrots/dapp-angular-library"
   },
+  "keywords": [
+    "Angular",
+    "dapp",
+    "web3",
+    "Ethereum",
+    "ethers",
+    "blockchain"
+  ],
   "peerDependencies": {
     "@angular/common": "^13.2.0",
     "@angular/core": "^13.2.0",

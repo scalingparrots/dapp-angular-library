@@ -47,11 +47,11 @@ global.process = require('process');
 Add this to your `allowedCommonJsDependencies` in your `angular.json` file
 
 ```ts
-"@walletconnect/web3-provider",
-  "@walletconnect/window-metadata",
-  "@walletconnect/socket-transport",
-  "@walletconnect/environment",
-  "@metamask/detect-provider"
+"@walletconnect/web3-provider", 
+"@walletconnect/window-metadata",
+"@walletconnect/socket-transport",
+"@walletconnect/environment",
+"@metamask/detect-provider"
 ```
 
 # Usage
