@@ -1,6 +1,6 @@
 {
   "name": "@scalingparrots/dapp-angular-lib",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "An angular library for creating WEB3 applications",
   "author": "scalingparrots",
   "contributors": [
@@ -19,6 +19,7 @@
     "type": "git",
     "url": "https://github.com/scalingparrots/dapp-angular-library"
   },
+  "license": "MIT",
   "keywords": [
     "Angular",
     "dapp",
