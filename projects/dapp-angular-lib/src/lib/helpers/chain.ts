@@ -21,7 +21,7 @@ export interface ChainIdModel {
 }
 
 export enum ChainId {
-  Mainnet = 1,
+  Ethereum = 1,
   Ropsten = 3,
   Rinkeby = 4,
   Goerli = 5,
@@ -43,7 +43,7 @@ export enum ChainId {
 }
 
 export const CHAIN_NAMES: ChainIdModel = {
-  [ChainId.Mainnet]: 'Mainnet',
+  [ChainId.Ethereum]: 'Ethereum',
   [ChainId.Ropsten]: 'Ropsten',
   [ChainId.Kovan]: 'Kovan',
   [ChainId.Rinkeby]: 'Rinkeby',
@@ -65,7 +65,7 @@ export const CHAIN_NAMES: ChainIdModel = {
 }
 
 export const NETWORK_ICON: ChainIdModel = {
-  [ChainId.Mainnet]: '/assets/icons/networks/mainnet.jpeg',
+  [ChainId.Ethereum]: '/assets/icons/networks/mainnet.jpeg',
   [ChainId.Ropsten]: '/assets/icons/networks/ropsten.jpeg',
   [ChainId.Kovan]: '/assets/icons/networks/fantom.jpeg',
   [ChainId.Rinkeby]: '/assets/icons/networks/rinkeby.jpeg',
@@ -87,7 +87,7 @@ export const NETWORK_ICON: ChainIdModel = {
 }
 
 export const NETWORK_INFO = {
-  [ChainId.Mainnet]: {
+  [ChainId.Ethereum]: {
     chainId: '0x1',
     chainName: 'Ethereum',
     nativeCurrency: {
