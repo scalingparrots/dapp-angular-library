@@ -36,29 +36,27 @@ export class ContractService {
   }
 
   /***
-   * Returns contract
+   * Write smart contract call, returns contract
    * @param contractAddress Smart contract address
    * @param abi
-   * @private
+   * @param methodName
+   * @param args
    */
-  private async getContract(contractAddress: string, abi: any) {
+  public async writeContract(contractAddress: string, abi: any, methodName: string, args?: any[]): Promise<any> {
     const provider = await this.getWebProvider();
     const signer = provider.getSigner();
 
-    return new ethers.Contract(
+    const contract = new ethers.Contract(
       contractAddress,
       abi,
       signer ? signer : provider
     );
-  }
 
-  /***
-   * Write smart contract call, returns contract
-   * @param contractAddress Smart contract address
-   * @param abi
-   */
-  public writeContract(contractAddress: string, abi: any): Promise<ethers.Contract> {
-    return this.getContract(contractAddress, abi);
+    if (args?.length) {
+      return contract[methodName](...args);
+    } else {
+      return contract[methodName]();
+    }
   }
 
   /***
@@ -68,8 +66,9 @@ export class ContractService {
    * @param abi
    * @param methodName
    * @param bySigner
+   * @param args
    */
-  public async readContract(contractAddress: string, rpcProvider: string, abi: any, methodName: string, bySigner = false) {
+  public async readContract(contractAddress: string, rpcProvider: string, abi: any, methodName: string, args?: any[], bySigner = false): Promise<any> {
     let provider;
     let signer;
 
@@ -86,6 +85,10 @@ export class ContractService {
       bySigner ? signer : provider
     );
 
-    return contractManager[methodName]();
+    if (args?.length) {
+      return contractManager[methodName](...args);
+    } else {
+      return contractManager[methodName]();
+    }
   }
 }
