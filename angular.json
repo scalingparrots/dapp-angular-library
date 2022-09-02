@@ -26,9 +26,15 @@
               "@walletconnect/window-metadata",
               "@walletconnect/socket-transport",
               "@walletconnect/environment",
+              "@walletconnect/window-getters",
               "@metamask/detect-provider",
               "hash.js",
-              "query-string"
+              "query-string",
+              "js-sha3",
+              "bn.js",
+              "bech32",
+              "scrypt-js",
+              "aes-js"
             ],
             "outputPath": "dist/dapp-library-playground",
             "index": "src/index.html",
@@ -150,5 +156,7 @@
       }
     }
   },
-  "defaultProject": "dapp-library-playground"
+  "cli": {
+    "analytics": false
+  }
 }
