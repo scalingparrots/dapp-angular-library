@@ -200,36 +200,39 @@ export class YourComponent implements OnInit {
     this.readTotalBurn();
     
     // example of write contract
-    this.approve('0x7Fc31fa8a88Fe7a811d4d1FF538B177fF00d796f', 1000);
+    this.approve('0x7Fc31fa8a88Fe7a811d4d1FF538B177fF00d796f', 100);
   }
 
-  readTotalBurn() {
-    this._contractService.readContract(
-      '0xbDC3b3639f7AA19e623A4d603A3Fb7Ab20115A91',
-      NETWORK_INFO[ChainId.BSC].rpcUrls[0],
-      abi,
-      'totalBurn'
-    )
-      .then(res => console.log(res));
+  async readTotalBurn() {
+    try {
+      const totalBurn = await this._contractService.readContract(
+        '0xbDC3b3639f7AA19e623A4d603A3Fb7Ab20115A91',
+        NETWORK_INFO[ChainId.BSC].rpcUrls[0],
+        abi,
+        'totalBurn'
+      );
+
+      console.log('Total burn:', totalBurn.toLocaleString());
+    } catch (error: any) {
+      console.log('Total burn', error.message);
+    }
   }
 
   async approve(spender: string, amount: number) {
-    const contract = await this._contractService.writeContract(
-      '0xbDC3b3639f7AA19e623A4d603A3Fb7Ab20115A91',
-      abi
-    );
+    const decimals = 18;
+    const am = BigNumber.from(amount).mul(BigNumber.from(10).pow(decimals));
 
     try {
-      let transaction = contract['approve'](
-        spender,
-        BigNumber.from(amount)
+      const tx = await this._contractService.writeContract(
+        '0xeF87F84cb04E9eE2eA5Cd3989ab62af4dFCa5E22',
+        abi,
+        'approve',
+        [spender, am]
       );
 
-      const tx = await transaction;
-      
-      console.log({tx})
+      console.log('Approve:', tx);
     } catch (error: any) {
-      console.error("Approve", error.message);
+      console.log('Approve', error.message);
     }
   }
 }
