@@ -4,7 +4,8 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class MessageService {
-  constructor() {}
+  constructor() {
+  }
 
   /**
    * Show a snack bar with a custom message and duration
@@ -108,7 +109,12 @@ export class MessageService {
     const text = document.createTextNode(message);
 
     if (snackbar) {
-      snackbar.appendChild(text);
+      const oldChild = snackbar.firstChild;
+      if (oldChild) {
+        snackbar.replaceChild(text, oldChild);
+      } else {
+        snackbar.appendChild(text);
+      }
 
       const isSnackbarActive = snackbar.dataset['isActive'] === 'true';
 
