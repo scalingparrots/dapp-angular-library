@@ -4,8 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class MessageService {
-  constructor() {
-  }
+  constructor() {}
 
   /**
    * Show a snack bar with a custom message and duration
@@ -13,7 +12,12 @@ export class MessageService {
    * @param duration The duration of the displayed message, default = 5000 (milliseconds)
    * @param panelClass The style class name: "info", "success" or "error"
    */
-  showMessage(message: string, duration: number = 5000, panelClass: string = "info") {
+  showMessage(
+    message: string,
+    duration: number = 5000,
+    panelClass: string = 'info'
+  ) {
+    // FIXME: snackbar list
     const styles = `
       .snackbar-container {
         display: grid;
@@ -100,9 +104,9 @@ export class MessageService {
     para.setAttribute('id', 'snackbar');
 
     if (panelClass === 'success') {
-      para.classList.add('success-snackbar')
+      para.classList.add('success-snackbar');
     } else if (panelClass === 'error') {
-      para.classList.add('error-snackbar')
+      para.classList.add('error-snackbar');
     }
 
     const snackbar = document.getElementById('snackbar');
@@ -125,6 +129,7 @@ export class MessageService {
 
         setTimeout(() => {
           snackbar.dataset['isActive'] = 'false';
+          element.removeChild(div);
         }, duration);
       }
     }
