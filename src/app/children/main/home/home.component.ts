@@ -14,8 +14,6 @@ import { ConnectWalletComponent } from '../component/connect-wallet/connect-wall
 import { SwitchNetworkComponent } from '../component/switch-network/switch-network.component';
 
 const abi = require('../../../core/abi/erc20.abi.json');
-const BoosterAbi = require('../../../core/abi/Booster.json');
-const LpTokenAbi = require('../../../core/abi/lpToken.abi.json');
 
 @Component({
   selector: 'app-home',
@@ -51,38 +49,6 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.readTotalBurn();
-    // this.allowance('0x0000000000000000000000000000000000000000', '0x0000000000000000000000000000000000000000');
-    // this.approve('0x0000000000000000000000000000000000000000', 100);
-
-    // this._contractService
-    //   .readContract(
-    //     '0xf403c135812408bfbe8713b5a23a04b3d48aae31',
-    //     'https://red-lively-flower.quiknode.pro/d9fdbf99be306441445a56cd45479a6e5a277759/',
-    //     BoosterAbi,
-    //     'poolInfo',
-    //     [32]
-    //   )
-    //   .then((res) => {
-    //     console.log(res);
-    //     //this.getCoinsBalances(res.lptoken, coinsLength);
-    //   });
-
-    this._contractService
-      .readContract(
-        '0x336AB186704C1b0E5Ef12402e8344DBeec5e00Bc',
-        'https://red-lively-flower.quiknode.pro/d9fdbf99be306441445a56cd45479a6e5a277759',
-        LpTokenAbi,
-        'name',
-        [],
-        true
-      )
-      .then((coins) => {
-        console.log({ coins });
-
-
-      })
-      .catch((error) => console.error(error));
   }
 
   // example of write contract
