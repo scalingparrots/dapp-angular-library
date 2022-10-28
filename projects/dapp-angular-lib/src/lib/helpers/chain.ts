@@ -241,4 +241,15 @@ export const NETWORK_INFO = {
     rpcUrls: ['https://moonriver.public.blastapi.io'],
     blockExplorerUrls: ['https://blockscout.moonriver.moonbeam.network/']
   },
+  [ChainId.Hardhat]: {
+    chainId: '0x7a69',
+    chainName: 'Hardhat',
+    nativeCurrency: {
+      name: 'Hardhat',
+      symbol: 'HETH',
+      decimals: 18,
+    },
+    rpcUrls: ['http://127.0.0.1:8545/'],
+    blockExplorerUrls: ['http://127.0.0.1:8545/']
+  },
 }
