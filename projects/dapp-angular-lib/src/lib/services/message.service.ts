@@ -25,7 +25,6 @@ export class MessageService {
         font-size: 1.05rem;
         font-family: "Poppins", sans-serif;
         background-color: hsl(0, 0%, 100%);
-        min-height: 100vh;
         place-items: center;
       }
 
