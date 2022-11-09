@@ -36,6 +36,8 @@ export class MessageService {
         opacity: 0;
         padding: 1em;
         border-radius: 10px;
+        max-width: 90%;
+        word-break: break-all;
       }
       .snackbar[data-is-active=true] {
         animation: showAnim 0.5s linear forwards;
