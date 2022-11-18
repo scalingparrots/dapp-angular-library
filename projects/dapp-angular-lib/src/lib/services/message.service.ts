@@ -31,8 +31,8 @@ export class MessageService {
       .snackbar {
         background: hsl(0, 0%, 30%);
         color: hsl(0, 0%, 90%);
-        position: absolute;
-        bottom: -100px;
+        position: fixed;
+        bottom:0%;
         opacity: 0;
         padding: 1em;
         border-radius: 10px;
