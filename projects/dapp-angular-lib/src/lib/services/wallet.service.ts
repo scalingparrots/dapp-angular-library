@@ -23,6 +23,7 @@ export class WalletService {
    * @param network The main network of the application, default Ethereum mainnet
    */
   public initNetwork(network: Network = NETWORK_INFO[1]) {
+    console.log(network.rpcUrls[0])
     this._globalVariables.requiredNetwork = {
       rpc: {
         0: network.rpcUrls[0],
@@ -55,6 +56,8 @@ export class WalletService {
       infuraId: this._globalVariables.infuraId,
       rpc: this._globalVariables.requiredNetwork.rpc
     });
+
+    console.log(this._globalVariables.walletConnectProvider)
 
     // Subscribe to account change
     this._globalVariables.walletConnectProvider.on("accountsChanged", (accounts: string[]) => {
@@ -103,9 +106,11 @@ export class WalletService {
    * @private
    */
   private async setVariables(ethAddresses: any, type: string) {
+    console.log(ethAddresses)
     this._globalVariables.type = type;
     this._globalVariables.wallet.signer = this._globalVariables.wallet.provider.getSigner();
     this._globalVariables.wallet.network = await this._globalVariables.wallet.provider.getNetwork();
+    console.log(this._globalVariables.wallet.network)
 
     if (Array.isArray(ethAddresses)) {
       this._globalVariables.wallet.address = ethAddresses[0];
@@ -180,6 +185,7 @@ export class WalletService {
 
       if (type === "metamask") {
         const provider: any = await detectEthereumProvider();
+        console.log(provider)
 
         this._globalVariables.wallet.provider = new ethers.providers.Web3Provider(provider);
         ethAddresses = await this._globalVariables.wallet.provider.send("eth_requestAccounts", []);
@@ -212,6 +218,7 @@ export class WalletService {
       let ethAddresses = [];
       if (type == "walletConnect") {
         ethAddresses = await this._globalVariables.walletConnectProvider.enable();
+        console.log(ethAddresses)
         this._globalVariables.wallet.provider = new ethers.providers.Web3Provider(this._globalVariables.walletConnectProvider);
         this._globalVariables.connectedProvider = this._globalVariables.walletConnectProvider;
       } else if (type == "metamask") {
@@ -220,6 +227,7 @@ export class WalletService {
         this._globalVariables.connectedProvider = this._globalVariables.metaMaskExtProvider;
       } else if (type === "binance") {
         this._globalVariables.wallet.provider = new ethers.providers.Web3Provider((window as any)['BinanceChain']);
+        console.log((window as any)['BinanceChain'])
         ethAddresses = await this._globalVariables.binanceExtProvider.enable();
         this._globalVariables.connectedProvider = this._globalVariables.binanceExtProvider;
         console.log('» 🚀 Established connection successfully to %cBinance Wallet Provider', 'color: #FABB51; font-size:14px')

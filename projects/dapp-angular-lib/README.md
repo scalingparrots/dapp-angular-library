@@ -46,12 +46,11 @@ global.process = require("process");
 
 # Usage
 
-It very simple to get dapp angular lib up and running, below is a simple example in how to get it working.
+It is very simple to get dapp angular lib up and running, below is a simple example in how to get it working.
 
 ## your.module.ts
 
-You need to import the `DappAngularLibModule` into your module file, example is just using a standard module example all
-you need to do is insert `DappAngularLibModule` into your `imports` array.
+You need to import the `DappAngularLibModule` into your module file, all you need to do is insert `DappAngularLibModule` into your `imports` array.
 
 ```ts
 import { DappAngularLibModule } from "dapp-angular-lib";
@@ -148,7 +147,7 @@ export class YourComponent {
 ## your.component.ts
 
 Switch network.
-The `network` you need to pass in the `switchNetwork()` function has to be an element of `NETWORK_ICON`
+The `network` you need to pass in the `switchNetwork()` function has to be an element of `NETWORK_INFO`
 
 ```ts
 import { Component } from "@angular/core";
@@ -175,6 +174,8 @@ Contract calls
 ```ts
 import { Component, OnInit } from "@angular/core";
 import { ChainId, NETWORK_INFO, ContractService } from "dapp-angular-lib";
+
+const abi = require('../../../core/abi/erc20.abi.json');
 
 @Component({
   selector: "app-root",

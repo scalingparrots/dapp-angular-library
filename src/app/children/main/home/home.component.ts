@@ -22,7 +22,7 @@ const abi = require('../../../core/abi/erc20.abi.json');
 })
 export class HomeComponent implements OnInit {
   win: any;
-  primary_network = NETWORK_INFO[ChainId.Hardhat];
+  primary_network = NETWORK_INFO[ChainId.Ethereum];
   supported_network = [
     NETWORK_INFO[ChainId.BSC],
     NETWORK_INFO[ChainId.Avalanche],
@@ -38,6 +38,7 @@ export class HomeComponent implements OnInit {
     private _messageService: MessageService
   ) {
     this.win = window as any;
+    console.log(this.primary_network)
 
     // init network necessary
     _walletService.initNetwork(this.primary_network);

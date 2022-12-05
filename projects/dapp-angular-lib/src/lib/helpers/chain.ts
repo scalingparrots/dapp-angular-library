@@ -95,7 +95,7 @@ export const NETWORK_INFO = {
       symbol: 'ETH',
       decimals: 18,
     },
-    rpcUrls: ['https://mainnet.infura.io/v3'],
+    rpcUrls: ['https://cloudflare-eth.com'],
     blockExplorerUrls: ['https://etherscan.com']
   },
   [ChainId.Ropsten]: {
