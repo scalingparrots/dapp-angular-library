@@ -23,7 +23,6 @@ export class WalletService {
    * @param network The main network of the application, default Ethereum mainnet
    */
   public initNetwork(network: Network = NETWORK_INFO[1]) {
-    console.log(network.rpcUrls[0])
     this._globalVariables.requiredNetwork = {
       rpc: {
         0: network.rpcUrls[0],
