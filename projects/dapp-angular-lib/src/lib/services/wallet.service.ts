@@ -56,8 +56,6 @@ export class WalletService {
       rpc: this._globalVariables.requiredNetwork.rpc
     });
 
-    console.log(this._globalVariables.walletConnectProvider)
-
     // Subscribe to account change
     this._globalVariables.walletConnectProvider.on("accountsChanged", (accounts: string[]) => {
       this._globalVariables.wallet.address = accounts[0];
@@ -105,11 +103,9 @@ export class WalletService {
    * @private
    */
   private async setVariables(ethAddresses: any, type: string) {
-    console.log(ethAddresses)
     this._globalVariables.type = type;
     this._globalVariables.wallet.signer = this._globalVariables.wallet.provider.getSigner();
     this._globalVariables.wallet.network = await this._globalVariables.wallet.provider.getNetwork();
-    console.log(this._globalVariables.wallet.network)
 
     if (Array.isArray(ethAddresses)) {
       this._globalVariables.wallet.address = ethAddresses[0];
@@ -184,7 +180,6 @@ export class WalletService {
 
       if (type === "metamask") {
         const provider: any = await detectEthereumProvider();
-        console.log(provider)
 
         this._globalVariables.wallet.provider = new ethers.providers.Web3Provider(provider);
         ethAddresses = await this._globalVariables.wallet.provider.send("eth_requestAccounts", []);
@@ -217,7 +212,6 @@ export class WalletService {
       let ethAddresses = [];
       if (type == "walletConnect") {
         ethAddresses = await this._globalVariables.walletConnectProvider.enable();
-        console.log(ethAddresses)
         this._globalVariables.wallet.provider = new ethers.providers.Web3Provider(this._globalVariables.walletConnectProvider);
         this._globalVariables.connectedProvider = this._globalVariables.walletConnectProvider;
       } else if (type == "metamask") {

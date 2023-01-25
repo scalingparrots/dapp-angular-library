@@ -38,7 +38,6 @@ export class HomeComponent implements OnInit {
     private _messageService: MessageService
   ) {
     this.win = window as any;
-    console.log(this.primary_network)
 
     // init network necessary
     _walletService.initNetwork(this.primary_network);
