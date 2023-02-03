@@ -5,7 +5,7 @@ import detectEthereumProvider from "@metamask/detect-provider";
 import {Network} from "./network.service";
 import {MessageService} from "./message.service";
 import {GlobalVariables} from "../helpers/global-variables";
-import {NETWORK_INFO} from "../helpers/chain";
+import {ChainId, NETWORK_INFO} from "../helpers/chain";
 
 
 @Injectable({
@@ -23,9 +23,11 @@ export class WalletService {
    * @param network The main network of the application, default Ethereum mainnet
    */
   public initNetwork(network: Network = NETWORK_INFO[1]) {
+    const key: number = ChainId[network.chainName as keyof typeof ChainId];
+
     this._globalVariables.requiredNetwork = {
       rpc: {
-        0: network.rpcUrls[0],
+        [key]: network.rpcUrls[0],
       },
       chainId: network.chainId,
       name: network.chainName
