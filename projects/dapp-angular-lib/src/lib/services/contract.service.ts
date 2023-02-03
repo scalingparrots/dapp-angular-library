@@ -26,10 +26,14 @@ export class ContractService {
     } else if (type === "binance" && this.win.BinanceChain) {
       provider = this.win.BinanceChain;
     } else {
-      provider = new WalletConnectProvider({
+      const walletConnectProvider = new WalletConnectProvider({
         infuraId: this._globalVariables.infuraId,
         rpc: this._globalVariables.requiredNetwork.rpc
       });
+
+      await walletConnectProvider.enable();
+
+      provider = walletConnectProvider
     }
 
     return new ethers.providers.Web3Provider(provider);
@@ -44,7 +48,7 @@ export class ContractService {
    */
   public async writeContract(contractAddress: string, abi: any, methodName: string, args?: any[]): Promise<any> {
     const provider = await this.getWebProvider();
-    const signer = provider.getSigner();
+    const signer = await provider.getSigner();
 
     const contract = new ethers.Contract(
       contractAddress,
