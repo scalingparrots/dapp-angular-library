@@ -62,7 +62,7 @@ export const CHAIN_NAMES: ChainIdModel = {
   [ChainId.Localhost]: 'Localhost',
   [ChainId.Hardhat]: 'Hardhat',
   [ChainId.Fantom]: 'Fantom',
-}
+};
 
 export const NETWORK_ICON: ChainIdModel = {
   [ChainId.Ethereum]: '/assets/icons/networks/mainnet.jpeg',
@@ -84,7 +84,7 @@ export const NETWORK_ICON: ChainIdModel = {
   [ChainId.Localhost]: '',
   [ChainId.Hardhat]: '',
   [ChainId.Fantom]: '/assets/icons/networks/fantom.jpeg',
-}
+};
 
 export const NETWORK_INFO = {
   [ChainId.Ethereum]: {
@@ -96,7 +96,7 @@ export const NETWORK_INFO = {
       decimals: 18,
     },
     rpcUrls: ['https://cloudflare-eth.com'],
-    blockExplorerUrls: ['https://etherscan.com']
+    blockExplorerUrls: ['https://etherscan.com'],
   },
   [ChainId.Ropsten]: {
     chainId: '0x3',
@@ -107,7 +107,7 @@ export const NETWORK_INFO = {
       decimals: 18,
     },
     rpcUrls: ['https://ropsten.infura.io/v3'],
-    blockExplorerUrls: ['https://ropsten.etherscan.io']
+    blockExplorerUrls: ['https://ropsten.etherscan.io'],
   },
   [ChainId.Rinkeby]: {
     chainId: '0x4',
@@ -118,7 +118,7 @@ export const NETWORK_INFO = {
       decimals: 18,
     },
     rpcUrls: ['https://rinkeby.infura.io/v3'],
-    blockExplorerUrls: ['https://rinkeby.etherscan.io']
+    blockExplorerUrls: ['https://rinkeby.etherscan.io'],
   },
   [ChainId.Goerli]: {
     chainId: '0x5',
@@ -129,7 +129,7 @@ export const NETWORK_INFO = {
       decimals: 18,
     },
     rpcUrls: ['https://goerli.infura.io/v3'],
-    blockExplorerUrls: ['https://goerli.etherscan.io']
+    blockExplorerUrls: ['https://goerli.etherscan.io'],
   },
   [ChainId.Kovan]: {
     chainId: '0x2a',
@@ -140,7 +140,7 @@ export const NETWORK_INFO = {
       decimals: 18,
     },
     rpcUrls: ['https://kovan.infura.io/v3'],
-    blockExplorerUrls: ['https://kovan.etherscan.io']
+    blockExplorerUrls: ['https://kovan.etherscan.io'],
   },
   [ChainId.Fantom]: {
     chainId: '0xfa',
@@ -151,7 +151,7 @@ export const NETWORK_INFO = {
       decimals: 18,
     },
     rpcUrls: ['https://rpcapi.fantom.network/'],
-    blockExplorerUrls: ['https://ftmscan.com/Premi']
+    blockExplorerUrls: ['https://ftmscan.com/Premi'],
   },
   [ChainId.BSC]: {
     chainId: '0x38',
@@ -162,7 +162,7 @@ export const NETWORK_INFO = {
       decimals: 18,
     },
     rpcUrls: ['https://bsc-dataseed.binance.org'],
-    blockExplorerUrls: ['https://bscscan.com']
+    blockExplorerUrls: ['https://bscscan.com'],
   },
   [ChainId.BSCTestnet]: {
     chainId: '0x61',
@@ -173,7 +173,7 @@ export const NETWORK_INFO = {
       decimals: 18,
     },
     rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545/'],
-    blockExplorerUrls: ['https://testnet.bscscan.com']
+    blockExplorerUrls: ['https://testnet.bscscan.com'],
   },
   [ChainId.Polygon]: {
     chainId: '0x89',
@@ -184,7 +184,7 @@ export const NETWORK_INFO = {
       decimals: 18,
     },
     rpcUrls: ['https://polygon-rpc.com'],
-    blockExplorerUrls: ['https://polygonscan.com/']
+    blockExplorerUrls: ['https://polygonscan.com/'],
   },
   [ChainId.xDai]: {
     chainId: '0x64',
@@ -195,7 +195,7 @@ export const NETWORK_INFO = {
       decimals: 18,
     },
     rpcUrls: ['https://rpc.xdaichain.com/'],
-    blockExplorerUrls: ['https://blockscout.com/poa/xdai']
+    blockExplorerUrls: ['https://blockscout.com/poa/xdai'],
   },
   [ChainId.Avalanche]: {
     chainId: '0xa86a',
@@ -206,7 +206,7 @@ export const NETWORK_INFO = {
       decimals: 18,
     },
     rpcUrls: ['https://api.avax.network/ext/bc/C/rpc'],
-    blockExplorerUrls: ['https://snowtrace.io']
+    blockExplorerUrls: ['https://snowtrace.io'],
   },
   [ChainId.Harmony]: {
     chainId: '0xa4ec',
@@ -217,7 +217,7 @@ export const NETWORK_INFO = {
       decimals: 18,
     },
     rpcUrls: ['https://api.harmony.one'],
-    blockExplorerUrls: ['explorer.harmony.one']
+    blockExplorerUrls: ['explorer.harmony.one'],
   },
   [ChainId.Palm]: {
     chainId: '0x2a15c308d',
@@ -227,8 +227,10 @@ export const NETWORK_INFO = {
       symbol: 'PALM',
       decimals: 18,
     },
-    rpcUrls: ['https://palm-mainnet.infura.io/v3/3a961d6501e54add9a41aa53f15de99b'],
-    blockExplorerUrls: ['https://explorer.palm.io/']
+    rpcUrls: [
+      'https://palm-mainnet.infura.io/v3/3a961d6501e54add9a41aa53f15de99b',
+    ],
+    blockExplorerUrls: ['https://explorer.palm.io/'],
   },
   [ChainId.Moonriver]: {
     chainId: '0x505',
@@ -239,7 +241,7 @@ export const NETWORK_INFO = {
       decimals: 18,
     },
     rpcUrls: ['https://moonriver.public.blastapi.io'],
-    blockExplorerUrls: ['https://blockscout.moonriver.moonbeam.network/']
+    blockExplorerUrls: ['https://blockscout.moonriver.moonbeam.network/'],
   },
   [ChainId.Hardhat]: {
     chainId: '0x7a69',
@@ -250,6 +252,6 @@ export const NETWORK_INFO = {
       decimals: 18,
     },
     rpcUrls: ['http://127.0.0.1:8545/'],
-    blockExplorerUrls: ['http://127.0.0.1:8545/']
+    blockExplorerUrls: ['http://127.0.0.1:8545/'],
   },
-}
+};

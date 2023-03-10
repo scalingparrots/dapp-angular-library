@@ -1,16 +1,16 @@
-import {Injectable} from '@angular/core';
-import {ethers, providers} from "ethers";
-import WalletConnectProvider from "@walletconnect/web3-provider";
-import {GlobalVariables} from "../helpers/global-variables";
+import { Injectable } from '@angular/core';
+import { ethers, providers } from 'ethers';
+import WalletConnectProvider from '@walletconnect/web3-provider';
+import { GlobalVariables } from '../helpers/global-variables';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ContractService {
   win: any;
 
   constructor(public _globalVariables: GlobalVariables) {
-    this.win = (window as any);
+    this.win = window as any;
   }
 
   /***
@@ -18,22 +18,22 @@ export class ContractService {
    * @private
    */
   private async getWebProvider() {
-    const type = this._globalVariables.getLocalStorage("type");
+    const type = this._globalVariables.getLocalStorage('type');
     let provider: any;
 
-    if (type === "metamask" && this.win.ethereum) {
+    if (type === 'metamask' && this.win.ethereum) {
       provider = this.win.ethereum;
-    } else if (type === "binance" && this.win.BinanceChain) {
+    } else if (type === 'binance' && this.win.BinanceChain) {
       provider = this.win.BinanceChain;
     } else {
       const walletConnectProvider = new WalletConnectProvider({
         infuraId: this._globalVariables.infuraId,
-        rpc: this._globalVariables.requiredNetwork.rpc
+        rpc: this._globalVariables.requiredNetwork.rpc,
       });
 
       await walletConnectProvider.enable();
 
-      provider = walletConnectProvider
+      provider = walletConnectProvider;
     }
 
     return new ethers.providers.Web3Provider(provider);
@@ -46,7 +46,12 @@ export class ContractService {
    * @param methodName
    * @param args
    */
-  public async writeContract(contractAddress: string, abi: any, methodName: string, args?: any[]): Promise<any> {
+  public async writeContract(
+    contractAddress: string,
+    abi: any,
+    methodName: string,
+    args?: any[]
+  ): Promise<any> {
     const provider = await this.getWebProvider();
     const signer = await provider.getSigner();
 
@@ -72,7 +77,14 @@ export class ContractService {
    * @param bySigner
    * @param args
    */
-  public async readContract(contractAddress: string, rpcProvider: string, abi: any, methodName: string, args?: any[], bySigner = false): Promise<any> {
+  public async readContract(
+    contractAddress: string,
+    rpcProvider: string,
+    abi: any,
+    methodName: string,
+    args?: any[],
+    bySigner = false
+  ): Promise<any> {
     let provider;
     let signer;
 
