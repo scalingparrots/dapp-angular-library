@@ -22,7 +22,7 @@ const abi = require('../../../core/abi/erc20.abi.json');
 })
 export class HomeComponent implements OnInit {
   win: any;
-  primary_network = NETWORK_INFO[ChainId.Ethereum];
+  primary_network = NETWORK_INFO[ChainId.Mumbai];
   supported_network = [
     NETWORK_INFO[ChainId.BSC],
     NETWORK_INFO[ChainId.Avalanche],
