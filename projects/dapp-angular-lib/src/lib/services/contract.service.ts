@@ -22,7 +22,9 @@ export class ContractService {
     let provider: any;
 
     if (type === 'metamask' && this.win.ethereum) {
-      provider = this.win.ethereum;
+      provider = this._globalVariables.metaMaskExtProvider;
+    } else if (type === 'coinbase' && this.win.ethereum) {
+      provider = this._globalVariables.coinbaseExtProvider;
     } else if (type === 'binance' && this.win.BinanceChain) {
       provider = this.win.BinanceChain;
     } else {

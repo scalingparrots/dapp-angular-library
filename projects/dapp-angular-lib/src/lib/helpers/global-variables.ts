@@ -19,6 +19,7 @@ export class GlobalVariables {
   public connectedProvider: any = {};
   public walletConnectProvider: any = {};
   public metaMaskExtProvider: any = false;
+  public coinbaseExtProvider: any = false;
   public binanceExtProvider: any = false;
   public browserExtSupported: any = false;
 

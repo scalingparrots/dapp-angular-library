@@ -124,7 +124,7 @@ export class YourComponent implements OnInit {
 ## your.component.ts
 
 Connect wallet.
-The `type` you need to pass in the `connectWallet()` function has to be one of this: ["metamask", "binance", "connectWallet"]
+The `type` you need to pass in the `connectWallet()` function has to be one of this: ["metamask", "coinbase", "binance", "connectWallet"]
 
 ```ts
 import { Component } from "@angular/core";
@@ -197,7 +197,7 @@ Contract calls
 import { Component, OnInit } from "@angular/core";
 import { ChainId, NETWORK_INFO, ContractService } from "dapp-angular-lib";
 
-const abi = require('../../../core/abi/erc20.abi.json');
+const abi = require("../../../core/abi/erc20.abi.json");
 
 @Component({
   selector: "app-root",
@@ -231,13 +231,19 @@ export class YourComponent implements OnInit {
         "Total burn: " + totalBurn.toLocaleString()
       );
     } catch (error: any) {
-      this._messageService.showMessage("Total burn " + error.message, 3000, "error");
+      this._messageService.showMessage(
+        "Total burn " + error.message,
+        3000,
+        "error"
+      );
     }
   }
 
   async approve(spender: string, amount: number) {
     const decimals = 18;
-    const amountFormatted = BigNumber.from(amount).mul(BigNumber.from(10).pow(decimals));
+    const amountFormatted = BigNumber.from(amount).mul(
+      BigNumber.from(10).pow(decimals)
+    );
 
     try {
       const tx = await this._contractService.writeContract(
@@ -249,7 +255,11 @@ export class YourComponent implements OnInit {
 
       this._messageService.showMessage("Approve: " + tx);
     } catch (error: any) {
-      this._messageService.showMessage("Approve " + error.message, 3000, "error");
+      this._messageService.showMessage(
+        "Approve " + error.message,
+        3000,
+        "error"
+      );
     }
   }
 }

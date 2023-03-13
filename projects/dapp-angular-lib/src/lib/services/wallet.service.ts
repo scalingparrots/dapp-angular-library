@@ -53,6 +53,7 @@ export class WalletService {
     }
     this.initBinanceExt();
     this.initMetaMaskExt();
+    this.initCoinBaseExt();
   }
 
   /***
@@ -132,7 +133,7 @@ export class WalletService {
   /***
    * Set wallet info after connected
    * @param ethAddresses The addresses connected from wallet
-   * @param type The type of wallet connected: ["metamask", "binance", "walletConnect"]
+   * @param type The type of wallet connected: ["metamask", "coinbase", "binance", "walletConnect"]
    * @private
    */
   private async setVariables(ethAddresses: any, type: string) {
@@ -185,6 +186,22 @@ export class WalletService {
   }
 
   /***
+   * Initialize CoinBase wallet provider
+   * @private
+   */
+  private initCoinBaseExt() {
+    if (this.win.ethereum) {
+      this._globalVariables.browserExtSupported = true;
+
+      if (this.win.ethereum.providers?.length) {
+        this.win.ethereum.providers.forEach(async (p: any) => {
+          if (p.isCoinbaseWallet) this._globalVariables.coinbaseExtProvider = p;
+        });
+      }
+    }
+  }
+
+  /***
    * Returns true if Binance Chain Wallet extension is installed
    * @private
    */
@@ -215,9 +232,10 @@ export class WalletService {
       let ethAddresses = [];
 
       if (type === 'metamask') {
-        const provider: any = await detectEthereumProvider();
         this._globalVariables.wallet.provider =
-          new ethers.providers.Web3Provider(provider);
+          new ethers.providers.Web3Provider(
+            this._globalVariables.metaMaskExtProvider
+          );
 
         ethAddresses = await this._globalVariables.metaMaskExtProvider.request({
           method: 'eth_requestAccounts',
@@ -226,6 +244,21 @@ export class WalletService {
 
         this._globalVariables.connectedProvider =
           this._globalVariables.metaMaskExtProvider;
+
+        await this.setVariables(ethAddresses, type);
+      } else if (type === 'coinbase') {
+        this._globalVariables.wallet.provider =
+          new ethers.providers.Web3Provider(
+            this._globalVariables.coinbaseExtProvider
+          );
+
+        ethAddresses = await this._globalVariables.coinbaseExtProvider.request({
+          method: 'eth_requestAccounts',
+          params: [],
+        });
+
+        this._globalVariables.connectedProvider =
+          this._globalVariables.coinbaseExtProvider;
 
         await this.setVariables(ethAddresses, type);
       } else if (type === 'binance') {
@@ -251,7 +284,7 @@ export class WalletService {
 
   /***
    * Connect wallet
-   * @param type The type of wallet you want to connect: ["metamask", "binance", "walletConnect"]
+   * @param type The type of wallet you want to connect: ["metamask", "coinbase", "binance", "walletConnect"]
    */
   public async connectWallet(type: string) {
     try {
@@ -276,6 +309,17 @@ export class WalletService {
         );
         this._globalVariables.connectedProvider =
           this._globalVariables.metaMaskExtProvider;
+      } else if (type == 'coinbase') {
+        this._globalVariables.wallet.provider =
+          new ethers.providers.Web3Provider(
+            this._globalVariables.coinbaseExtProvider
+          );
+        ethAddresses = await this._globalVariables.wallet.provider.send(
+          'eth_requestAccounts',
+          []
+        );
+        this._globalVariables.connectedProvider =
+          this._globalVariables.coinbaseExtProvider;
       } else if (type === 'binance') {
         this._globalVariables.wallet.provider =
           new ethers.providers.Web3Provider((window as any)['BinanceChain']);
