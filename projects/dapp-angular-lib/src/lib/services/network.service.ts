@@ -47,14 +47,40 @@ export class NetworkService {
 
     if (type === 'metamask' && this.win.ethereum) {
       try {
-        return await this.win.ethereum.request({
+        return await this._globalVariables.metaMaskExtProvider.request({
           method: 'wallet_switchEthereumChain',
           params: [{ chainId: supported_network.chainId }],
         });
       } catch (switchError: any) {
         if (switchError.code === 4902) {
           try {
-            return await this.win.ethereum.request({
+            return await this._globalVariables.metaMaskExtProvider.request({
+              method: 'wallet_addEthereumChain',
+              params: [supported_network],
+            });
+          } catch (addError: any) {
+            this._messageService.showMessage(
+              'Switch Networks: ' + addError.message,
+              3000
+            );
+          }
+        } else {
+          this._messageService.showMessage(
+            'Switch Networks: ' + switchError.message,
+            3000
+          );
+        }
+      }
+    } else if (type === 'coinbase' && this.win.ethereum) {
+      try {
+        return await this._globalVariables.coinbaseExtProvider.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: supported_network.chainId }],
+        });
+      } catch (switchError: any) {
+        if (switchError.code === 4902) {
+          try {
+            return await this._globalVariables.coinbaseExtProvider.request({
               method: 'wallet_addEthereumChain',
               params: [supported_network],
             });
