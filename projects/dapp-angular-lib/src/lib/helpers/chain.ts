@@ -186,6 +186,17 @@ export const NETWORK_INFO = {
     rpcUrls: ['https://polygon-rpc.com'],
     blockExplorerUrls: ['https://polygonscan.com/'],
   },
+  [ChainId.Mumbai]: {
+    chainId: '0x13881',
+    chainName: 'Mumbai',
+    nativeCurrency: {
+      name: 'Mumbai',
+      symbol: 'Matic',
+      decimals: 18,
+    },
+    rpcUrls: ['https://rpc-mumbai.matic.today/'],
+    blockExplorerUrls: ['https://explorer-mumbai.maticvigil.com/'],
+  },
   [ChainId.xDai]: {
     chainId: '0x64',
     chainName: 'xDai',
@@ -253,16 +264,5 @@ export const NETWORK_INFO = {
     },
     rpcUrls: ['http://127.0.0.1:8545/'],
     blockExplorerUrls: ['http://127.0.0.1:8545/'],
-  },
-  [ChainId.Mumbai]: {
-    chainId: '0x13881',
-    chainName: 'Mumbai',
-    nativeCurrency: {
-      name: 'Mumbai',
-      symbol: 'Matic',
-      decimals: 18,
-    },
-    rpcUrls: ['https://rpc-mumbai.matic.today/'],
-    blockExplorerUrls: ['https://explorer-mumbai.maticvigil.com/']
   },
 };

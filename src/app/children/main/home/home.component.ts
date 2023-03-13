@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
-import { formatEther, parseEther } from 'ethers/lib.esm/utils';
+import { formatEther, parseEther } from 'ethers/lib/utils';
 import { formatFixed } from '@ethersproject/bignumber';
 
 import { WalletService } from '../../../../../projects/dapp-angular-lib/src/lib/services/wallet.service';

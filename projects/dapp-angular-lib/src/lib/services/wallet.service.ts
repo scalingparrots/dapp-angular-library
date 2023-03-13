@@ -172,16 +172,10 @@ export class WalletService {
     if (this.win.ethereum) {
       this._globalVariables.browserExtSupported = true;
 
-      if (this.win.ethereum.providers) {
-        const providers = this.win.ethereum.providers;
-
-        for (let i = 0; i < providers.length; i++) {
-          const tmpProvider = providers[i];
-
-          if (tmpProvider.isMetaMask) {
-            this._globalVariables.metaMaskExtProvider = tmpProvider;
-          }
-        }
+      if (this.win.ethereum.providers?.length) {
+        this.win.ethereum.providers.forEach(async (p: any) => {
+          if (p.isMetaMask) this._globalVariables.metaMaskExtProvider = p;
+        });
       } else {
         if (this.win.ethereum.isMetaMask) {
           this._globalVariables.metaMaskExtProvider = this.win.ethereum;
@@ -221,14 +215,15 @@ export class WalletService {
       let ethAddresses = [];
 
       if (type === 'metamask') {
-        const provider: any = await detectEthereumProvider({mustBeMetaMask: true});
-
+        const provider: any = await detectEthereumProvider();
         this._globalVariables.wallet.provider =
           new ethers.providers.Web3Provider(provider);
-        ethAddresses = await this._globalVariables.wallet.provider.send(
-          'eth_requestAccounts',
-          []
-        );
+
+        ethAddresses = await this._globalVariables.metaMaskExtProvider.request({
+          method: 'eth_requestAccounts',
+          params: [],
+        });
+
         this._globalVariables.connectedProvider =
           this._globalVariables.metaMaskExtProvider;
 
@@ -236,7 +231,9 @@ export class WalletService {
       } else if (type === 'binance') {
         this._globalVariables.wallet.provider =
           new ethers.providers.Web3Provider(this.win.BinanceChain);
+
         ethAddresses = await this._globalVariables.binanceExtProvider.enable();
+
         this._globalVariables.connectedProvider =
           this._globalVariables.binanceExtProvider;
 

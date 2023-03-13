@@ -169,6 +169,28 @@ export class YourComponent {
 
 ## your.component.ts
 
+Get balance wallet
+
+```ts
+import { Component } from "@angular/core";
+import { WalletService } from "dapp-angular-lib";
+
+@Component({
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.scss"],
+})
+export class YourComponent {
+  constructor(private _walletService: WalletService) {}
+
+  getBalanceWallet(rpc: string, wallet: string) {
+    this._walletService.getWalletBalance(rpc, wallet);
+  }
+}
+```
+
+## your.component.ts
+
 Contract calls
 
 ```ts
