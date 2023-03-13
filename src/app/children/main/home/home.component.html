@@ -3,18 +3,75 @@
     <button class="connect-btn" (click)="openConnect()">Connect wallet</button>
   </div>
 
+  <div class="content" *ngIf="getGlobalVariables().isWalletConnected">
+    <div>
+      <h2>
+        <i class="fas fa-wallet text-dark"></i> Wallet Connected:
+        {{ getGlobalVariables().wallet.addressShort }}
+      </h2>
 
-  <div *ngIf="getGlobalVariables().isWalletConnected">
-    <h2>
-      <i class="fas fa-wallet text-dark"></i> Wallet Connected: {{getGlobalVariables().wallet.addressShort}}
-    </h2>
+      <a href="" class="disconnect" (click)="disconnectWallet()">
+        Disconnect
+      </a>
+    </div>
 
-    <a href="" class="disconnect" (click)="disconnectWallet()">
-      Disconnect
-    </a>
+    <div>
+      <button class="switch" (click)="openSwitchNetwork()">
+        Switch network
+      </button>
+    </div>
   </div>
 
-  <div *ngIf="getGlobalVariables().isWalletConnected && getGlobalVariables().type === 'metamask'">
-    <button class="switch" (click)="openSwitchNetwork()">Switch network</button>
+  <div class="content" *ngIf="getGlobalVariables().isWalletConnected">
+    <div>
+      <span *ngIf="tBnbBalance"
+        >Balance: {{ tBnbBalance.toFixed(4) }}
+        {{ primary_network.nativeCurrency.symbol }}</span
+      >
+
+      <button
+        class="connect-btn"
+        (click)="getWalletBalance()"
+        *ngIf="!tBnbBalance"
+      >
+        <span *ngIf="!loadingBalance">Get balance</span>
+
+        <mat-progress-spinner
+          [diameter]="16"
+          mode="indeterminate"
+          *ngIf="loadingBalance"
+        >
+        </mat-progress-spinner>
+      </button>
+    </div>
+
+    <div>
+      <span *ngIf="tBusdAllowance"
+        >Allowance: {{ tBusdAllowance.toFixed(4) }} BUSD</span
+      >
+
+      <button
+        class="connect-btn"
+        (click)="
+          allowance(getGlobalVariables().wallet.address, this.tBusdContract)
+        "
+        *ngIf="!tBusdAllowance"
+      >
+        <span *ngIf="!loadingAllowance"> Read allowance</span>
+
+        <mat-progress-spinner
+          [diameter]="16"
+          mode="indeterminate"
+          *ngIf="loadingAllowance"
+        >
+        </mat-progress-spinner>
+      </button>
+    </div>
+
+    <form [formGroup]="transferForm">
+      <input formControlName="amount" />
+
+      <button class="switch" (click)="handleApprove()">Approve</button>
+    </form>
   </div>
 </div>

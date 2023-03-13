@@ -1,17 +1,23 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { BigNumber } from '@ethersproject/bignumber';
-import {
-  ChainId,
-  NETWORK_INFO,
-} from '../../../../../projects/dapp-angular-lib/src/lib/helpers/chain';
+
+import { formatEther, parseEther } from 'ethers/lib/utils';
+import { formatFixed } from '@ethersproject/bignumber';
+
 import { WalletService } from '../../../../../projects/dapp-angular-lib/src/lib/services/wallet.service';
 import { NetworkService } from '../../../../../projects/dapp-angular-lib/src/lib/services/network.service';
 import { ContractService } from '../../../../../projects/dapp-angular-lib/src/lib/services/contract.service';
 import { MessageService } from '../../../../../projects/dapp-angular-lib/src/lib/services/message.service';
 import { GlobalVariables } from '../../../../../projects/dapp-angular-lib/src/lib/helpers/global-variables';
+
 import { ConnectWalletComponent } from '../component/connect-wallet/connect-wallet.component';
 import { SwitchNetworkComponent } from '../component/switch-network/switch-network.component';
+
+import {
+  ChainId,
+  NETWORK_INFO,
+} from '../../../../../projects/dapp-angular-lib/src/lib/helpers/chain';
 
 const abi = require('../../../core/abi/erc20.abi.json');
 
@@ -22,7 +28,8 @@ const abi = require('../../../core/abi/erc20.abi.json');
 })
 export class HomeComponent implements OnInit {
   win: any;
-  primary_network = NETWORK_INFO[ChainId.Mumbai];
+
+  primary_network = NETWORK_INFO[ChainId.BSCTestnet];
   supported_network = [
     NETWORK_INFO[ChainId.BSC],
     NETWORK_INFO[ChainId.Avalanche],
@@ -30,8 +37,17 @@ export class HomeComponent implements OnInit {
     NETWORK_INFO[ChainId.Polygon],
   ];
 
+  tBnbBalance: number = 0;
+  loadingBalance: boolean = false;
+
+  transferForm: FormGroup;
+  tBusdContract: string = '0xeD24FC36d5Ee211Ea25A80239Fb8C4Cfd80f12Ee';
+  tBusdAllowance: number = 0;
+  loadingAllowance: boolean = false;
+
   constructor(
     public dialog: MatDialog,
+    private _formBuilder: FormBuilder,
     private _walletService: WalletService,
     private _networkService: NetworkService,
     private _contractService: ContractService,
@@ -46,41 +62,54 @@ export class HomeComponent implements OnInit {
     this.getProvider()
       // check network only if needed
       .then((_) => _networkService.checkNetwork(this.primary_network));
+
+    this.transferForm = _formBuilder.group({
+      amount: [''],
+    });
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  getWalletBalance(): void {
+    this.loadingBalance = true;
+    this._walletService
+      .getWalletBalance(
+        this.primary_network.rpcUrls[0],
+        this.getGlobalVariables().wallet.address
+      )
+      .then((balance) => {
+        this.tBnbBalance = Number(formatFixed(balance, 18));
+        this.loadingBalance = false;
+      });
+  }
+
+  handleApprove(): void {
+    const amount = formatEther(this.transferForm.get('amount')?.value);
+    this.approve(this.tBusdContract, amount);
   }
 
   // example of write contract
-  async approve(spender: string, amount: number) {
-    const decimals = 18;
-    const am = BigNumber.from(amount).mul(BigNumber.from(10).pow(decimals));
+  async approve(spender: string, amount: string) {
+    const amountFormatted = parseEther(amount);
 
     try {
       const tx = await this._contractService.writeContract(
-        '0x0000000000000000000000000000000000000000',
+        this.tBusdContract,
         abi,
         'approve',
-        [spender, am]
+        [spender, amountFormatted]
       );
 
-      this._messageService.showMessage('Success');
-    } catch (error: any) {
-      this._messageService.showMessage(error.message);
-    }
-  }
+      // transaction confirmed
+      this._messageService.showMessage('Transaction confirmed');
 
-  // example of read contract
-  async readTotalBurn() {
-    try {
-      const totalBurn = await this._contractService.readContract(
-        '0x0000000000000000000000000000000000000000',
-        NETWORK_INFO[ChainId.BSC].rpcUrls[0],
-        abi,
-        'totalBurn'
-      );
+      const receipt = await tx.wait();
 
-      this._messageService.showMessage(totalBurn.toLocaleString());
+      // transaction completed
+
+      console.log(receipt);
+
+      this._messageService.showMessage('Transaction completed');
     } catch (error: any) {
       this._messageService.showMessage(error.message);
     }
@@ -88,18 +117,21 @@ export class HomeComponent implements OnInit {
 
   // example of read contract
   async allowance(owner: string, spender: string) {
+    this.loadingAllowance = true;
     try {
       const allowance = await this._contractService.readContract(
-        '0x0000000000000000000000000000000000000000',
-        NETWORK_INFO[ChainId.BSC].rpcUrls[0],
+        this.tBusdContract,
+        this.primary_network.rpcUrls[0],
         abi,
         'allowance',
         [owner, spender]
       );
 
-      this._messageService.showMessage(allowance.toLocaleString());
+      this.tBusdAllowance = Number(formatFixed(allowance, 18));
+      this.loadingAllowance = false;
     } catch (error: any) {
       this._messageService.showMessage(error.message);
+      this.loadingAllowance = false;
     }
   }
 

@@ -13,7 +13,7 @@
 
   .connect-btn {
     background: #109fdc;
-    color: #FFFFFF;
+    color: #ffffff;
     border-radius: 38.5px;
     font-size: 16px;
     border: transparent;
@@ -23,12 +23,35 @@
 
   .switch {
     background: #dc9510;
-    color: #FFFFFF;
+    color: #ffffff;
     border-radius: 15px;
     font-size: 14px;
     border: transparent;
     cursor: pointer;
     padding: 5px 20px;
   }
-}
 
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    form {
+      display: flex;
+      flex-direction: row;
+      gap: 20px;
+    }
+
+    input {
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.10171);
+      border: transparent;
+      border-radius: 10px;
+      font-size: 16px;
+      padding: 0 10px;
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+}
