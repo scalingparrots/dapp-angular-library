@@ -194,7 +194,7 @@ export const NETWORK_INFO = {
       symbol: 'Matic',
       decimals: 18,
     },
-    rpcUrls: ['https://rpc-mumbai.matic.today/'],
+    rpcUrls: ['https://matic-mumbai.chainstacklabs.com/'],
     blockExplorerUrls: ['https://explorer-mumbai.maticvigil.com/'],
   },
   [ChainId.xDai]: {
@@ -259,6 +259,17 @@ export const NETWORK_INFO = {
     chainName: 'Hardhat',
     nativeCurrency: {
       name: 'Hardhat',
+      symbol: 'HETH',
+      decimals: 18,
+    },
+    rpcUrls: ['http://127.0.0.1:8545/'],
+    blockExplorerUrls: ['http://127.0.0.1:8545/'],
+  },
+  [ChainId.Localhost]: {
+    chainId: '0x7a69',
+    chainName: 'Localhost',
+    nativeCurrency: {
+      name: 'Localhost',
       symbol: 'HETH',
       decimals: 18,
     },

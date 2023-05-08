@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ethers } from 'ethers';
 import WalletConnectProvider from '@walletconnect/web3-provider';
-import detectEthereumProvider from '@metamask/detect-provider';
 import { Network } from './network.service';
 import { MessageService } from './message.service';
 import { GlobalVariables } from '../helpers/global-variables';
@@ -323,7 +322,6 @@ export class WalletService {
       } else if (type === 'binance') {
         this._globalVariables.wallet.provider =
           new ethers.providers.Web3Provider((window as any)['BinanceChain']);
-        console.log((window as any)['BinanceChain']);
         ethAddresses = await this._globalVariables.binanceExtProvider.enable();
         this._globalVariables.connectedProvider =
           this._globalVariables.binanceExtProvider;

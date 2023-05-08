@@ -106,9 +106,6 @@ export class HomeComponent implements OnInit {
       const receipt = await tx.wait();
 
       // transaction completed
-
-      console.log(receipt);
-
       this._messageService.showMessage('Transaction completed');
     } catch (error: any) {
       this._messageService.showMessage(error.message);

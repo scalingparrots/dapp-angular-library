@@ -109,4 +109,16 @@ export class ContractService {
       return contractManager[methodName]();
     }
   }
+
+  /***
+   * Signing Messages
+   * sign a simple string
+   * @param message
+   */
+  public async signMessage(message: string) {
+    const provider = await this.getWebProvider();
+    const signer = await provider.getSigner();
+
+    return signer.signMessage(message);
+  }
 }
