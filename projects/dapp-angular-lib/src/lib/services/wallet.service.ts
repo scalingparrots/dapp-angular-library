@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ethers } from 'ethers';
-import WalletConnectProvider from '@walletconnect/web3-provider';
+import WalletConnectProvider from '@walletconnect/ethereum-provider';
 import { Network } from './network.service';
 import { MessageService } from './message.service';
 import { GlobalVariables } from '../helpers/global-variables';

@@ -4,20 +4,19 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class MessageService {
-  constructor() {}
-
   /**
    * Show a snack bar with a custom message and duration
    * @param message The message for the snack bar
    * @param duration The duration of the displayed message, default = 5000 (milliseconds)
-   * @param panelClass The style class name: "info", "success" or "error"
+   * @param position The position of the snackbar: "top" or "bottom", default = "bottom"
+   * @param panelClass The style class name: "info", "success" or "error", default = "info"
    */
   showMessage(
     message: string,
     duration: number = 5000,
-    panelClass: string = 'info'
+    panelClass: string = 'info',
+    position: string = 'bottom'
   ) {
-    // FIXME: snackbar list
     const styles = `
       .snackbar-container {
         display: grid;
@@ -32,18 +31,30 @@ export class MessageService {
         background: hsl(0, 0%, 30%);
         color: hsl(0, 0%, 90%);
         position: fixed;
-        bottom:0%;
+        bottom: 0%;
         opacity: 0;
         padding: 1em;
         border-radius: 10px;
         max-width: 90%;
         word-break: break-all;
       }
+
       .snackbar[data-is-active=true] {
         animation: showAnim 0.5s linear forwards;
       }
+
       .snackbar[data-is-active=false] {
         animation: hideAnim 0.5s linear forwards;
+      }
+
+      .position-top {
+        right: 40px;
+        bottom: auto !important;
+        max-width: 40%;
+      }
+
+      .position-bottom {
+        top: auto !important;
       }
 
       .success-snackbar {
@@ -72,6 +83,7 @@ export class MessageService {
           bottom: -100px;
         }
       }
+
       @keyframes showAnim {
         0% {
           opacity: 0;
@@ -92,17 +104,52 @@ export class MessageService {
     styleSheet.innerText = styles;
     document.head.appendChild(styleSheet);
 
-    const div = document.createElement('div');
-    div.classList.add('snackbar-container');
+    let top = 100;
+    let bottom = 30;
+
+    let div: Element;
+
+    if (document.getElementsByClassName('snackbar-container').length > 0) {
+      div = document.getElementsByClassName('snackbar-container')[0];
+
+      for (let i = 0; i < div.children.length; i++) {
+        const el = document.getElementById(`snackbar${i}`);
+
+        if (el) {
+          const positionLastElementTop = el.classList.contains('position-top');
+          const positionLastElementBottom =
+            el.classList.contains('position-bottom');
+
+          if (position === 'top' && positionLastElementTop) {
+            top += el.offsetHeight + 10;
+          } else if (position === 'bottom' && positionLastElementBottom) {
+            bottom += el.offsetHeight + 10;
+          }
+        }
+      }
+    } else {
+      div = document.createElement('div');
+      div.classList.add('snackbar-container');
+    }
+
+    let numberOfSnackbars = div.children.length;
+
+    const snackbarContainer = div;
 
     const para = document.createElement('p');
-    div.appendChild(para);
+    snackbarContainer.appendChild(para);
 
     const element = document.getElementsByTagName('body')[0];
-    element.appendChild(div);
+    element.appendChild(snackbarContainer);
 
-    para.classList.add('snackbar');
-    para.setAttribute('id', 'snackbar');
+    para.classList.add(`snackbar`);
+    para.setAttribute('id', `snackbar${numberOfSnackbars}`);
+
+    if (position === 'top') {
+      para.classList.add('position-top');
+    } else if (position === 'bottom') {
+      para.classList.add('position-bottom');
+    }
 
     if (panelClass === 'success') {
       para.classList.add('success-snackbar');
@@ -110,10 +157,16 @@ export class MessageService {
       para.classList.add('error-snackbar');
     }
 
-    const snackbar = document.getElementById('snackbar');
+    const snackbar = document.getElementById(`snackbar${numberOfSnackbars}`);
     const text = document.createTextNode(message);
 
     if (snackbar) {
+      if (position === 'top') {
+        snackbar.style.top = `${top}px`;
+      } else if (position === 'bottom') {
+        snackbar.setAttribute('style', `bottom:${bottom}px !important`);
+      }
+
       const oldChild = snackbar.firstChild;
       if (oldChild) {
         snackbar.replaceChild(text, oldChild);
@@ -130,7 +183,7 @@ export class MessageService {
 
         setTimeout(() => {
           snackbar.dataset['isActive'] = 'false';
-          element.removeChild(div);
+          div.removeChild(snackbar);
         }, duration);
       }
     }

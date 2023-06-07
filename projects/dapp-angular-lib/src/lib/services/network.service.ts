@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import WalletConnectProvider from '@walletconnect/web3-provider';
+import WalletConnectProvider from '@walletconnect/ethereum-provider';
 import { MessageService } from './message.service';
 import { GlobalVariables } from '../helpers/global-variables';
 import { ChainId, NETWORK_INFO } from '../helpers/chain';
@@ -98,13 +98,19 @@ export class NetworkService {
         }
       }
     } else if (type === 'binance' && this.win.BinanceChain) {
-      // TODO: investigate switch or add network with binance chain wallet
-
-      this._messageService.showMessage(
-        'Switch Networks: Please connect your wallet to ' +
-          supported_network.chainName +
-          ' network'
-      );
+      if (supported_network.chainId === '0x38') {
+        this._globalVariables.binanceExtProvider.switchNetwork('bsc-mainnet');
+      } else if (supported_network.chainId === '0x61') {
+        this._globalVariables.binanceExtProvider.switchNetwork('bsc-testnet');
+      } else if (supported_network.chainId === '0x1') {
+        this._globalVariables.binanceExtProvider.switchNetwork('eth-mainnet');
+      } else {
+        this._messageService.showMessage(
+          'Switch Networks: Please connect your wallet to ' +
+            supported_network.chainName +
+            ' network'
+        );
+      }
     } else {
       this._messageService.showMessage(
         'Switch Networks: Please connect your wallet to ' +

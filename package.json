@@ -23,7 +23,7 @@
     "@angular/platform-browser-dynamic": "^14.2.0",
     "@angular/router": "^14.2.0",
     "@metamask/detect-provider": "^1.2.0",
-    "@walletconnect/web3-provider": "^1.7.8",
+    "@walletconnect/ethereum-provider": "^1.7.8",
     "ethers": "^5.7.2",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
