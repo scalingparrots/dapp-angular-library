@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 import { WalletService } from '../../../../../../projects/dapp-angular-lib/src/lib/services/wallet.service';
 import { GlobalVariables } from '../../../../../../projects/dapp-angular-lib/src/lib/helpers/global-variables';
 import {
