@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { ethers } from 'ethers';
-import WalletConnectProvider from '@walletconnect/ethereum-provider';
-import { Network } from './network.service';
-import { MessageService } from './message.service';
-import { GlobalVariables } from '../helpers/global-variables';
-import { ChainId, NETWORK_INFO } from '../helpers/chain';
+import {Injectable} from '@angular/core';
+import {ethers} from 'ethers';
+import {Network} from './network.service';
+import {MessageService} from './message.service';
+import {GlobalVariables} from '../helpers/global-variables';
+import {ChainId, NETWORK_INFO} from '../helpers/chain';
+import EthereumProvider from "@walletconnect/ethereum-provider";
 
 @Injectable({
   providedIn: 'root',
@@ -37,12 +37,12 @@ export class WalletService {
     if (
       this._globalVariables.isWalletConnected &&
       this._globalVariables.wallet.network.name.toLowerCase() !=
-        this._globalVariables.requiredNetwork.name.toLowerCase()
+      this._globalVariables.requiredNetwork.name.toLowerCase()
     ) {
       this._messageService.showMessage(
         'Switch Networks: Please connect your wallet to ' +
-          this._globalVariables.requiredNetwork.chainName +
-          ' network'
+        this._globalVariables.requiredNetwork.chainName +
+        ' network'
       );
     }
 
@@ -60,9 +60,10 @@ export class WalletService {
    * @private
    */
   private async initWalletConnect() {
-    this._globalVariables.walletConnectProvider = new WalletConnectProvider({
-      infuraId: this._globalVariables.infuraId,
-      rpc: this._globalVariables.requiredNetwork.rpc,
+    this._globalVariables.walletConnectProvider = await EthereumProvider.init({
+      projectId: 'ecae63993c45b2a437a6bdc68aa94c81',
+      chains: [this._globalVariables.requiredNetwork.chainId],
+      showQrModal: true,
     });
 
     // Subscribe to account change
@@ -136,6 +137,7 @@ export class WalletService {
    * @private
    */
   private async setVariables(ethAddresses: any, type: string) {
+    console.log('setVariables', ethAddresses, type)
     this._globalVariables.type = type;
     this._globalVariables.wallet.signer =
       this._globalVariables.wallet.provider.getSigner();
@@ -205,7 +207,7 @@ export class WalletService {
    * @private
    */
   private static isBinanceInstalled(): boolean {
-    return !!(
+    return (
       window && Object.prototype.hasOwnProperty.call(window, 'BinanceChain')
     );
   }
@@ -289,8 +291,8 @@ export class WalletService {
     try {
       let ethAddresses = [];
       if (type == 'walletConnect') {
-        ethAddresses =
-          await this._globalVariables.walletConnectProvider.enable();
+        await this._globalVariables.walletConnectProvider.connect();
+        ethAddresses = await this._globalVariables.walletConnectProvider.request({method: "eth_requestAccounts"});
         this._globalVariables.wallet.provider =
           new ethers.providers.Web3Provider(
             this._globalVariables.walletConnectProvider

@@ -37,7 +37,10 @@
               "is-typedarray",
               "typedarray-to-buffer",
               "eventemitter3",
-              "cross-fetch"
+              "cross-fetch",
+              "buffer",
+              "qrcode",
+              "@stablelib/ed25519"
             ],
             "outputPath": "dist/dapp-library-playground",
             "index": "src/index.html",

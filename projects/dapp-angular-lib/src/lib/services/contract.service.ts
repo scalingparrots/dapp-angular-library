@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ethers, providers } from 'ethers';
-import WalletConnectProvider from '@walletconnect/ethereum-provider';
 import { GlobalVariables } from '../helpers/global-variables';
+import EthereumProvider from "@walletconnect/ethereum-provider";
+import {ChainId} from "../helpers/chain";
 
 @Injectable({
   providedIn: 'root',
@@ -28,9 +29,10 @@ export class ContractService {
     } else if (type === 'binance' && this.win.BinanceChain) {
       provider = this.win.BinanceChain;
     } else {
-      const walletConnectProvider = new WalletConnectProvider({
-        infuraId: this._globalVariables.infuraId,
-        rpc: this._globalVariables.requiredNetwork.rpc,
+      const walletConnectProvider = await EthereumProvider.init({
+        projectId: 'ecae63993c45b2a437a6bdc68aa94c81',
+        chains: [1, ChainId.BSC, ChainId.BSCTestnet],
+        showQrModal: true,
       });
 
       await walletConnectProvider.enable();
