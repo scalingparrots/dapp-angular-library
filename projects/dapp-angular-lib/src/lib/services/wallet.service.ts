@@ -1,10 +1,10 @@
-import {Injectable} from '@angular/core';
-import {ethers} from 'ethers';
-import {Network} from './network.service';
-import {MessageService} from './message.service';
-import {GlobalVariables} from '../helpers/global-variables';
-import {ChainId, NETWORK_INFO} from '../helpers/chain';
-import EthereumProvider from "@walletconnect/ethereum-provider";
+import { Injectable } from '@angular/core';
+import { ethers } from 'ethers';
+import { Network } from './network.service';
+import { MessageService } from './message.service';
+import { GlobalVariables } from '../helpers/global-variables';
+import { ChainId, NETWORK_INFO } from '../helpers/chain';
+import EthereumProvider from '@walletconnect/ethereum-provider';
 
 @Injectable({
   providedIn: 'root',
@@ -37,16 +37,16 @@ export class WalletService {
     if (
       this._globalVariables.isWalletConnected &&
       this._globalVariables.wallet.network.name.toLowerCase() !=
-      this._globalVariables.requiredNetwork.name.toLowerCase()
+        this._globalVariables.requiredNetwork.name.toLowerCase()
     ) {
       this._messageService.showMessage(
         'Switch Networks: Please connect your wallet to ' +
-        this._globalVariables.requiredNetwork.chainName +
-        ' network'
+          this._globalVariables.requiredNetwork.chainName +
+          ' network'
       );
     }
 
-    this.initWalletConnect();
+    this.initWalletConnect(key);
     if (this._globalVariables.isCordova) {
       this.setConnectLinkForMobile();
     }
@@ -59,12 +59,20 @@ export class WalletService {
    * Initialize Wallet connect provider and get wallet info
    * @private
    */
-  private async initWalletConnect() {
+  private async initWalletConnect(chainId: number) {
     this._globalVariables.walletConnectProvider = await EthereumProvider.init({
-      projectId: 'ecae63993c45b2a437a6bdc68aa94c81',
-      chains: [this._globalVariables.requiredNetwork.chainId],
       showQrModal: true,
+      projectId: this._globalVariables.projectId,
+      chains: [chainId],
     });
+
+    // Subscribe to connect account
+    this._globalVariables.walletConnectProvider.on('connect', () =>
+      console.info(
+        'Connected wallets',
+        this._globalVariables.walletConnectProvider.accounts
+      )
+    );
 
     // Subscribe to account change
     this._globalVariables.walletConnectProvider.on(
@@ -86,7 +94,6 @@ export class WalletService {
       'chainChanged',
       async (chainId: number) => {
         if (this._globalVariables.requiredNetwork.chainId != chainId) {
-          this._globalVariables.isWalletConnected = false;
           this._messageService.showMessage(
             'Switch Networks: Please connect your wallet to ' +
               this._globalVariables.requiredNetwork.name +
@@ -137,7 +144,6 @@ export class WalletService {
    * @private
    */
   private async setVariables(ethAddresses: any, type: string) {
-    console.log('setVariables', ethAddresses, type)
     this._globalVariables.type = type;
     this._globalVariables.wallet.signer =
       this._globalVariables.wallet.provider.getSigner();
@@ -292,7 +298,12 @@ export class WalletService {
       let ethAddresses = [];
       if (type == 'walletConnect') {
         await this._globalVariables.walletConnectProvider.connect();
-        ethAddresses = await this._globalVariables.walletConnectProvider.request({method: "eth_requestAccounts"});
+
+        ethAddresses =
+          await this._globalVariables.walletConnectProvider.request({
+            method: 'eth_requestAccounts',
+          });
+
         this._globalVariables.wallet.provider =
           new ethers.providers.Web3Provider(
             this._globalVariables.walletConnectProvider
@@ -327,7 +338,7 @@ export class WalletService {
         ethAddresses = await this._globalVariables.binanceExtProvider.enable();
         this._globalVariables.connectedProvider =
           this._globalVariables.binanceExtProvider;
-        console.log(
+        console.info(
           '» 🚀 Established connection successfully to %cBinance Wallet Provider',
           'color: #FABB51; font-size:14px'
         );

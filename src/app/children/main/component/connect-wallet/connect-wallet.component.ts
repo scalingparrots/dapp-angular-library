@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 import { WalletService } from '../../../../../../projects/dapp-angular-lib/src/lib/services/wallet.service';
 import { GlobalVariables } from '../../../../../../projects/dapp-angular-lib/src/lib/helpers/global-variables';
 import {
@@ -28,7 +28,11 @@ export class ConnectWalletComponent {
   }
 
   connectWallet(type: string) {
-    this._walletService.connectWallet(type).then((_) => {
+    if (type === 'walletConnect') {
+      this._dialogRef.close();
+    }
+
+    this._walletService.connectWallet(type).then(() => {
       this._dialogRef.close();
     });
   }

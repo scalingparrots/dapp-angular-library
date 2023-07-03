@@ -40,7 +40,8 @@
               "cross-fetch",
               "buffer",
               "qrcode",
-              "@stablelib/ed25519"
+              "@stablelib/ed25519",
+              "events"
             ],
             "outputPath": "dist/dapp-library-playground",
             "index": "src/index.html",

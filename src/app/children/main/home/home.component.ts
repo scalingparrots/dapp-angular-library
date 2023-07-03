@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 
 import { formatEther, parseEther } from 'ethers/lib/utils';
 import { formatFixed } from '@ethersproject/bignumber';
@@ -18,6 +17,7 @@ import {
   ChainId,
   NETWORK_INFO,
 } from '../../../../../projects/dapp-angular-lib/src/lib/helpers/chain';
+import { MatDialog } from '@angular/material/dialog';
 
 const abi = require('../../../core/abi/erc20.abi.json');
 
@@ -108,7 +108,7 @@ export class HomeComponent implements OnInit {
       // transaction completed
       this._messageService.showMessage('Transaction completed');
     } catch (error: any) {
-      this._messageService.showMessage(error.message);
+      this._messageService.showMessage('Transaction rejected');
     }
   }
 
@@ -142,6 +142,18 @@ export class HomeComponent implements OnInit {
 
   async disconnectWallet(): Promise<void> {
     await this._walletService.disconnectWallet();
+  }
+
+  signMessage(): void {
+    this._contractService
+      .signMessage('Hello World')
+      .then((signature) => {
+        console.info('signature', signature);
+        this._messageService.showMessage('Message signed');
+      })
+      .catch((error) => {
+        this._messageService.showMessage('Transaction rejected');
+      });
   }
 
   openConnect(): void {

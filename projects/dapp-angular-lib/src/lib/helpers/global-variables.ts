@@ -16,6 +16,7 @@ export class GlobalVariables {
   public requiredNetwork: any;
   public isCordova: boolean = false;
   public projectId: string = 'ecae63993c45b2a437a6bdc68aa94c81';
+  public infuraId: string = '047b078622fc49c3b514538f47389c30';
   public connectedProvider: any = {};
   public walletConnectProvider: any = {};
   public metaMaskExtProvider: any = false;

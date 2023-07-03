@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { MessageService } from './message.service';
 import { GlobalVariables } from '../helpers/global-variables';
 import { ChainId, NETWORK_INFO } from '../helpers/chain';
-import EthereumProvider from "@walletconnect/ethereum-provider";
 
 export interface Network {
   chainId: string;
@@ -137,13 +136,11 @@ export class NetworkService {
         chain = this.win.ethereum.networkVersion;
       } else if (type === 'binance' && this.win.BinanceChain) {
         chain = this.win.BinanceChain.chainId;
-      } else {
-        this._globalVariables.walletConnectProvider = await EthereumProvider.init({
-          projectId: 'ecae63993c45b2a437a6bdc68aa94c81',
-          chains: [1, ChainId.BSC, ChainId.BSCTestnet],
-          showQrModal: true,
-        });
-
+      } else if (
+        type === 'walletConnect' &&
+        this._globalVariables.walletConnectProvider.chainId
+      ) {
+        chain = this._globalVariables.walletConnectProvider.chainId;
         this._globalVariables.walletConnectProvider.on(
           'chainChanged',
           async (chainId: number) => {

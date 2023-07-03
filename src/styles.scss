@@ -9,7 +9,6 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-.mat-progress-spinner circle,
-.mat-spinner circle {
+.mat-mdc-progress-spinner .mdc-circular-progress__indeterminate-circle-graphic {
   stroke: white !important;
 }
