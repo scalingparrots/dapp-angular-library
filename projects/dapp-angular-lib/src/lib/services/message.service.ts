@@ -25,6 +25,7 @@ export class MessageService {
         font-family: "Poppins", sans-serif;
         background-color: hsl(0, 0%, 100%);
         place-items: center;
+        z-index: 9999
       }
 
       .snackbar {
