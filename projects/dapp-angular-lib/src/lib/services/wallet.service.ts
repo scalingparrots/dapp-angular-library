@@ -41,7 +41,7 @@ export class WalletService {
     ) {
       this._messageService.showMessage(
         'Switch Networks: Please connect your wallet to ' +
-          this._globalVariables.requiredNetwork.chainName +
+          this._globalVariables.requiredNetwork.name +
           ' network'
       );
     }
